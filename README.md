@@ -7,7 +7,7 @@ game desenvolvido em JS seguindo o tutorial (https://www.youtube.com/watch?v=yP5
 # Checklist
 - [x] Criar mapa
 - [x] Carregar mapa no canvas
-- [x] Carregar sprint personagem
+- [ ] Carregar sprint personagem
 - [ ] Animar personagem
 - [ ] Alinhar animação com movimento
 - [ ] Trocar de tela
