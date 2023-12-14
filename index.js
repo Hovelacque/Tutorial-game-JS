@@ -13,9 +13,14 @@ mapaImage.src = "./Map/Mapa-zoom-550.png";
 const mapaForegroundItensImage = new Image();
 mapaForegroundItensImage.src = "./Map/Mapa-Foreground-itens.png";
 
-const playerImage = new Image();
-playerImage.src = "./Tilesets/ACharDown.png";
-// playerImage.src = "./Tilesets/playerDwon.png";
+const playerImageUp = new Image();
+playerImageUp.src = "./Tilesets/ACharUp.png";
+const playerImageDown = new Image();
+playerImageDown.src = "./Tilesets/ACharDown.png";
+const playerImageLeft = new Image();
+playerImageLeft.src = "./Tilesets/ACharLeft.png";
+const playerImageRight = new Image();
+playerImageRight.src = "./Tilesets/ACharRight.png";
 
 let backgroundX = -1575;
 let backgroundY = -1000;
@@ -49,7 +54,7 @@ class Borda {
     }
 
     draw() {
-        context2D.fillStyle = 'rgba(255, 0, 0, 0.5)';
+        context2D.fillStyle = 'rgba(255, 0, 0, 0.3)';
         context2D.fillRect(this.x, this.y, this.size, this.size);
 
         desenhaPontosDeColisao(this.x, this.y, this.size, this.size);
@@ -81,25 +86,31 @@ class Sprite {
 
 class Jogador {
 
-    size = 100;  //tamanho player
+    image = playerImageDown;
+
+    constructor() {
+        this.frame = 1;
+        this.counterAnimation = 0;
+        this.moving = false;
+    }
 
     /* PLOT SIMPLES */
     // context2D.drawImage(
-    //     playerImage,
+    //     this.image,
     //     0, //x crop (dx)
     //     0, //y crop (dy)
-    //     canvas.width / 2 - playerImage.width / 2, // (dw)
-    //     canvas.height / 2 - playerImage.height / 2, // (dh)
+    //     canvas.width / 2 - this.image.width / 2, // (dw)
+    //     canvas.height / 2 - this.image.height / 2, // (dh)
     // );
 
     /* PLOT COM CUT */
     // context2D.drawImage(
-    //     playerImage,
+    //     this.image,
     //     //cropping
     //     0, // sx (x superior esquerdo)
     //     0, // sy (y superior esquerdo)
-    //     playerImage.width / 2, // sw (largura corte) 
-    //     playerImage.height / 2, // sh (altura corte)
+    //     this.image.width / 2, // sw (largura corte) 
+    //     this.image.height / 2, // sh (altura corte)
     //     0,  // dx (x para plot)
     //     0,  // dy (y para plot)
     //     100, // dw (largura para plot)
@@ -107,37 +118,39 @@ class Jogador {
     // );
 
     draw() {
-        let sx = 0, sy = 0, sw = playerImage.width / 2, sh = playerImage.height / 2;
-        // if (frame == 2) {
-        // sx = playerImage.width / 2;
-        // sy = 0;
-        // sw = playerImage.width;
-        // sh = playerImage.height / 2;
-        // frame++;
-        // }
-        // else if (frame == 3) {
-        // sx = 0;
-        // sy = playerImage.height / 2;
-        // sw = playerImage.width / 2;
-        // sh = playerImage.height;
-        //     frame++;
-        // }
-        // else if (frame == 4) {
-        // sx = playerImage.width / 2;
-        // sy = playerImage.height / 2;
-        // sw = playerImage.width;
-        // sh = playerImage.height;
-        //     frame = 1;
-        // }
-        // else
-        //     frame++
 
-        let x = canvas.width / 2 - playerImage.width / 2;
-        let y = canvas.height / 2 - playerImage.height / 2;
+        this.size = this.image.width * 2;
+
+        let sx = 0, sy = 0, sw = this.image.width / 2, sh = this.image.height / 2;
+
+        if (this.moving) {
+            if (this.frame == 2) {
+                sx = this.image.width / 2;
+                sy = 0;
+            }
+            else if (this.frame == 3) {
+                sx = 0;
+                sy = this.image.height / 2;
+            }
+            else if (this.frame == 4) {
+                sx = this.image.width / 2;
+                sy = this.image.height / 2;
+            }
+
+            if (this.counterAnimation >= 5) {
+                this.frame++;
+                if (this.frame > 4) this.frame = 1;
+                this.counterAnimation = 0
+            }
+            else
+                this.counterAnimation++;
+        }
+
+        let x = canvas.width / 2 - this.image.width / 2;
+        let y = canvas.height / 2 - this.image.height / 2;
 
         context2D.drawImage(
-            playerImage,
-            // 0, 0, playerImage.width / 2, playerImage.height / 2, //cuting
+            this.image,
             sx, sy, sw, sh,
             x, y,
             this.size, this.size
@@ -201,7 +214,10 @@ function animate() {
     foregroundItens.draw();
 
     let moving = true;
+    player.moving = false;
     if (movimentos.cima) {
+        player.moving = true;
+        player.image = playerImageUp;
         for (let i = 0; i < bordas.length; i++) {
             let borda = bordas[i];
             if (
@@ -219,6 +235,8 @@ function animate() {
             atoresQueAndam.forEach(ator => ator.y += velocidade);
     }
     if (movimentos.esquerda) {
+        player.moving = true;
+        player.image = playerImageLeft;
         for (let i = 0; i < bordas.length; i++) {
             let borda = bordas[i];
             if (
@@ -236,6 +254,8 @@ function animate() {
             atoresQueAndam.forEach(ator => ator.x += velocidade);
     }
     if (movimentos.baixo) {
+        player.moving = true;
+        player.image = playerImageDown;
         for (let i = 0; i < bordas.length; i++) {
             let borda = bordas[i];
             if (
@@ -253,6 +273,8 @@ function animate() {
             atoresQueAndam.forEach(ator => ator.y -= velocidade);
     }
     if (movimentos.direita) {
+        player.moving = true;
+        player.image = playerImageRight;
         for (let i = 0; i < bordas.length; i++) {
             let borda = bordas[i];
             if (
