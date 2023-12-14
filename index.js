@@ -79,7 +79,6 @@ class Sprite {
     }
 
     draw() {
-        // context2D.drawImage(this.image, backgroundX, backgroundY);
         context2D.drawImage(this.image, this.x, this.y);
     }
 }
@@ -174,18 +173,6 @@ const movimentos = {
     baixo: false,
     esquerda: false,
     direita: false
-    // cima: {
-    //     press: false
-    // },
-    // baixo: {
-    //     press: false
-    // },
-    // esquerda: {
-    //     press: false
-    // },
-    // direita: {
-    //     press: false
-    // }
 }
 
 let frame = 1;
@@ -199,14 +186,6 @@ function animate() {
 
     bordas.forEach(borda => {
         borda.draw();
-        // if (
-        //     player.x + player.width >= borda.x &&
-        //     player.x <= borda.x + borda.size &&
-        //     player.y <= borda.y + borda.size &&
-        //     player.y + player.height >= borda.y
-        // ) {
-        //     console.log("bateu!");
-        // }
     });
 
     player.draw();
@@ -294,8 +273,6 @@ function animate() {
 }
 
 window.addEventListener('keydown', (e) => {
-    // console.log(e.key)
-    // console.log(movimentos);
     switch (e.key) {
         case 'w':
         case 'ArrowUp':
@@ -321,7 +298,6 @@ window.addEventListener('keydown', (e) => {
 })
 
 window.addEventListener('keyup', (e) => {
-    // console.log(movimentos);
     switch (e.key) {
         case 'w':
         case 'ArrowUp':
