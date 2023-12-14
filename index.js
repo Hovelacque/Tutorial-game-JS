@@ -10,6 +10,9 @@ context2D.fillRect(0, 0, canvas.width, canvas.height);
 const mapaImage = new Image();
 mapaImage.src = "./Map/Mapa-zoom-550.png";
 
+const mapaForegroundItensImage = new Image();
+mapaForegroundItensImage.src = "./Map/Mapa-Foreground-itens.png";
+
 const playerImage = new Image();
 playerImage.src = "./Tilesets/ACharDown.png";
 // playerImage.src = "./Tilesets/playerDwon.png";
@@ -150,6 +153,7 @@ class Jogador {
 }
 
 const background = new Sprite(mapaImage, backgroundX, backgroundY, velocidade);
+const foregroundItens = new Sprite(mapaForegroundItensImage, backgroundX, backgroundY, velocidade);
 const player = new Jogador();
 
 const movimentos = {
@@ -173,7 +177,7 @@ const movimentos = {
 
 let frame = 1;
 
-const atoresQueAndam = [background, ...bordas];
+const atoresQueAndam = [background, ...bordas, foregroundItens];
 
 function animate() {
     window.requestAnimationFrame(animate);
@@ -193,6 +197,8 @@ function animate() {
     });
 
     player.draw();
+
+    foregroundItens.draw();
 
     let moving = true;
     if (movimentos.cima) {
