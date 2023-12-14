@@ -34,15 +34,15 @@ for (let i = 0; i < collisions.length; i += 70) {
 
 
 function desenhaPontosDeColisao(x, y, w, h) {
-    let tamanhoPonto = 5;
-    context2D.fillStyle = 'blue';
-    context2D.fillRect(x, y, tamanhoPonto, tamanhoPonto);
-    context2D.fillStyle = 'yellow';
-    context2D.fillRect(x + w - tamanhoPonto, y, tamanhoPonto, tamanhoPonto);
-    context2D.fillStyle = 'pink';
-    context2D.fillRect(x, y + h - tamanhoPonto, tamanhoPonto, tamanhoPonto);
-    context2D.fillStyle = 'purple';
-    context2D.fillRect(x + w - tamanhoPonto, y + h - tamanhoPonto, tamanhoPonto, tamanhoPonto);
+    // let tamanhoPonto = 5;
+    // context2D.fillStyle = 'blue';
+    // context2D.fillRect(x, y, tamanhoPonto, tamanhoPonto);
+    // context2D.fillStyle = 'yellow';
+    // context2D.fillRect(x + w - tamanhoPonto, y, tamanhoPonto, tamanhoPonto);
+    // context2D.fillStyle = 'pink';
+    // context2D.fillRect(x, y + h - tamanhoPonto, tamanhoPonto, tamanhoPonto);
+    // context2D.fillStyle = 'purple';
+    // context2D.fillRect(x + w - tamanhoPonto, y + h - tamanhoPonto, tamanhoPonto, tamanhoPonto);
 }
 
 
