@@ -71,12 +71,30 @@ collisionsMap.forEach((row, i) => {
     })
 });
 
+class Som {
+    constructor(src, loop = false) {
+        this.sound = document.createElement("audio");
+        this.sound.src = src;
+        this.sound.setAttribute("preload", "auto");
+        this.sound.setAttribute("controls", "none");
+        this.sound.setAttribute("loop", loop);
+        this.sound.style.display = "none";
+        document.body.appendChild(this.sound);
+    }
+
+    play() {
+        this.sound.play();
+    }
+    stop() {
+        this.sound.pause();
+    }
+}
 
 class Checkbox {
 
     tamanhoImage = 16;
 
-    constructor(x, y, text, value = false) {
+    constructor(x, y, text, value = false, clickFuncion = () => { }) {
         this.image = new Image();
         this.image.src = "./assets/icons.png";
 
@@ -85,6 +103,12 @@ class Checkbox {
         this.y = y;
         this.value = value;
         this.height = 20;
+        this.clickFuncion = clickFuncion;
+    }
+
+    click() {
+        this.value = !this.value;
+        this.clickFuncion(this.value);
     }
 
     draw() {
@@ -203,8 +227,15 @@ const foregroundItens = new Sprite(mapaForegroundItensImage, backgroundX, backgr
 const player = new Jogador();
 const checks = [
     new Checkbox(5, 5, "BORDAS", true),
-    new Checkbox(5, 25, "PONTOS DE COLISAO", true)
-]
+    new Checkbox(5, 25, "PONTOS DE COLISAO", true),
+    new Checkbox(5, 45, "SOM", false, (value) => {
+        if (value)
+            somDeFundo.play();
+        else
+            somDeFundo.stop();
+    })
+];
+const somDeFundo = new Som('assets/map.wav');
 
 const movimentos = {
     cima: false,
@@ -357,6 +388,7 @@ window.addEventListener('keyup', (e) => {
     }
 })
 
+let primeiroClick = false;
 const canvasLeft = canvas.offsetLeft + canvas.clientLeft;
 const canvasTop = canvas.offsetTop + canvas.clientTop;
 canvas.addEventListener('click', function (event) {
@@ -366,10 +398,17 @@ canvas.addEventListener('click', function (event) {
     checks.forEach(item => {
         if (y > item.y && y < item.y + item.height
             && x > item.x && x < item.x + item.width) {
-            item.value = !item.value;
+            item.click();
         }
     });
+
+    if (!primeiroClick) {
+        checks[2].click();//check do som
+        primeiroClick = true;
+    }
 
 }, false);
 
 animate();
+
+
