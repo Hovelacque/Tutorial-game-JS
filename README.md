@@ -7,10 +7,11 @@ game desenvolvido em JS seguindo o tutorial (https://www.youtube.com/watch?v=yP5
 # Checklist
 - [x] Criar mapa
 - [x] Carregar mapa no canvas
-- [ ] Carregar sprint personagem
-- [ ] Animar personagem
-- [ ] Alinhar animação com movimento
+- [x] Carregar sprint personagem
+- [x] Animar personagem
+- [x] Alinhar animação com movimento
 - [ ] Trocar de tela
 - [ ] Controlar Luta
+- [x] Adicionar controle de checkbox
 - [ ] Adicionar Joystick para versão Mobile
 - [ ] Adicionar som e efeitos sonoros
