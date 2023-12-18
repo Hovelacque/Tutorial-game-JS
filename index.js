@@ -34,15 +34,17 @@ for (let i = 0; i < collisions.length; i += 70) {
 
 
 function desenhaPontosDeColisao(x, y, w, h) {
-    let tamanhoPonto = 5;
-    context2D.fillStyle = 'blue';
-    context2D.fillRect(x, y, tamanhoPonto, tamanhoPonto);
-    context2D.fillStyle = 'yellow';
-    context2D.fillRect(x + w - tamanhoPonto, y, tamanhoPonto, tamanhoPonto);
-    context2D.fillStyle = 'pink';
-    context2D.fillRect(x, y + h - tamanhoPonto, tamanhoPonto, tamanhoPonto);
-    context2D.fillStyle = 'purple';
-    context2D.fillRect(x + w - tamanhoPonto, y + h - tamanhoPonto, tamanhoPonto, tamanhoPonto);
+    if (checks[1].value) {
+        let tamanhoPonto = 5;
+        context2D.fillStyle = 'blue';
+        context2D.fillRect(x, y, tamanhoPonto, tamanhoPonto);
+        context2D.fillStyle = 'yellow';
+        context2D.fillRect(x + w - tamanhoPonto, y, tamanhoPonto, tamanhoPonto);
+        context2D.fillStyle = 'pink';
+        context2D.fillRect(x, y + h - tamanhoPonto, tamanhoPonto, tamanhoPonto);
+        context2D.fillStyle = 'purple';
+        context2D.fillRect(x + w - tamanhoPonto, y + h - tamanhoPonto, tamanhoPonto, tamanhoPonto);
+    }
 }
 
 
@@ -69,6 +71,38 @@ collisionsMap.forEach((row, i) => {
     })
 });
 
+
+class Checkbox {
+
+    tamanhoImage = 16;
+
+    constructor(x, y, text, value = false) {
+        this.image = new Image();
+        this.image.src = "./assets/icons.png";
+
+        this.text = text;
+        this.x = x;
+        this.y = y;
+        this.value = value;
+        this.height = 20;
+    }
+
+    draw() {
+        let sx = this.value ? 16 : 0;
+        context2D.drawImage(
+            this.image,
+            sx, 0,
+            this.tamanhoImage, this.tamanhoImage,
+            this.x, this.y,
+            this.tamanhoImage, this.tamanhoImage
+        );
+        context2D.fillStyle = "#623436";
+        context2D.font = "20px Common Pixel";
+        let larguraTexto = context2D.measureText(this.text).width;
+        context2D.fillText(this.text, this.x + 20, this.y + 15);
+        this.width = larguraTexto + this.tamanhoImage;
+    }
+}
 
 class Sprite {
     constructor(image, x, y, velocidade) {
@@ -167,6 +201,10 @@ class Jogador {
 const background = new Sprite(mapaImage, backgroundX, backgroundY, velocidade);
 const foregroundItens = new Sprite(mapaForegroundItensImage, backgroundX, backgroundY, velocidade);
 const player = new Jogador();
+const checks = [
+    new Checkbox(5, 5, "BORDAS", true),
+    new Checkbox(5, 25, "PONTOS DE COLISAO", true)
+]
 
 const movimentos = {
     cima: false,
@@ -184,13 +222,14 @@ function animate() {
 
     background.draw();
 
-    bordas.forEach(borda => {
-        borda.draw();
-    });
+    if (checks[0].value)
+        bordas.forEach(item => item.draw());
 
     player.draw();
 
     foregroundItens.draw();
+
+    checks.forEach(item => item.draw());
 
     let moving = true;
     player.moving = false;
@@ -317,5 +356,20 @@ window.addEventListener('keyup', (e) => {
             break;
     }
 })
+
+const canvasLeft = canvas.offsetLeft + canvas.clientLeft;
+const canvasTop = canvas.offsetTop + canvas.clientTop;
+canvas.addEventListener('click', function (event) {
+    var x = event.pageX - canvasLeft,
+        y = event.pageY - canvasTop;
+
+    checks.forEach(item => {
+        if (y > item.y && y < item.y + item.height
+            && x > item.x && x < item.x + item.width) {
+            item.value = !item.value;
+        }
+    });
+
+}, false);
 
 animate();
