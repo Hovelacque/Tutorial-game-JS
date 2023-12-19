@@ -1,5 +1,3 @@
-const joystick = new JoyStick('joyDiv');
-
 const canvas = document.querySelector('canvas');
 const context2D = canvas.getContext('2d');
 
@@ -411,6 +409,12 @@ canvas.addEventListener('click', function (event) {
 
 }, false);
 
-animate();
+// const joystick = new JoyStick('joyDiv', {}, (stickData)=>{
+//     if (!primeiroClick) {
+//         checks[2].click();//check do som
+//         primeiroClick = true;
+//     } 
+// });
 
+animate();
 
