@@ -13,5 +13,5 @@ game desenvolvido em JS seguindo o tutorial (https://www.youtube.com/watch?v=yP5
 - [ ] Trocar de tela
 - [ ] Controlar Luta
 - [x] Adicionar controle de checkbox
-- [ ] Adicionar Joystick para versão Mobile
-- [x] Adicionar som e efeitos sonoros 
+- [x] Adicionar Joystick para versão Mobile
+- [x] Adicionar som e efeitos sonoros
