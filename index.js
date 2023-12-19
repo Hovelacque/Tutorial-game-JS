@@ -1,3 +1,5 @@
+const joystick = new JoyStick('joyDiv');
+
 const canvas = document.querySelector('canvas');
 const context2D = canvas.getContext('2d');
 

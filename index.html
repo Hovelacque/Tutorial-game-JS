@@ -6,11 +6,28 @@
         align-items: center;
     }
 
+    .container {
+        height: 576px;
+    }
+
+    .joystick {
+        width: 200px;
+        height: 200px;
+        position: relative;
+        top: -200px;
+    }
+
     @font-face {
         font-family: 'Common Pixel';
         src: url('assets/commonPixel.woff') format('woff');
     }
 </style>
-<canvas></canvas>
+
+<div class="container">
+    <canvas></canvas>
+    <div id="joyDiv" class="joystick"></div>
+</div>
+
+<script src="resources/joy.min.js"></script>
 <script src="Map/collisions.js "></script>
 <script src="index.js"></script>
